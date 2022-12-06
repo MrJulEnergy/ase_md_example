@@ -1,5 +1,9 @@
-import ase_md.simulator as ase
+from zntrack import Node, zn
+import ase
+import ase_md.simulator as asemd
+import typing
 
+#TODO Mark Outputs
 
 class GetAtoms(Node):
     """Generate Atoms for Simulation"""
@@ -7,20 +11,20 @@ class GetAtoms(Node):
     size: int = zn.params()
 
     def generate(self):
-        self.atoms = ase.generate_atoms(self.size)
+        self.atoms = asemd.generate_atoms(self.size)
 
 
 class RunMD(Node):
     """Run Simulation"""
 
-    # atoms =
+    atoms: ase.Atoms = zn.deps()
     temperature: float = zn.params()
     timestep: float = zn.params()
     dump_interval: int = zn.params()
     steps: int = zn.params()
 
     def run_md(self):
-        atoms_list = ase.run_simulation(
+        atoms_list = asemd.run_simulation(
             atoms=self.atoms,
             temperature=self.temperature,
             timestep=self.timestep,
@@ -32,12 +36,12 @@ class RunMD(Node):
 class ComputeRDF(Node):
     """Calculate RDF whatever that means..."""
 
-    # atoms_list =
+    atoms_list: typing.List[ase.Atoms] = zn.deps()
     rmax: float = zn.params()
     nbins: int = zn.params()
 
     def calc_rfd(self):
-        rfd = ase.compute_rdf(
+        rfd = asemd.compute_rdf(
             atoms_list=self.atoms_list, 
             rmax=self.rmas, 
             nbins=self.nbins, 
