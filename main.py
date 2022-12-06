@@ -3,28 +3,30 @@ import ase
 import ase_md.simulator as asemd
 import typing
 
-#TODO Mark Outputs
-
 class GetAtoms(Node):
     """Generate Atoms for Simulation"""
-
+    #Inputs:
     size: int = zn.params()
-
+    #Outputs:
+    atoms: ase.Atoms = zn.metrics()
+    #Function:
     def generate(self):
         self.atoms = asemd.generate_atoms(self.size)
 
 
 class RunMD(Node):
     """Run Simulation"""
-
+    #Inputs:
     atoms: ase.Atoms = zn.deps()
     temperature: float = zn.params()
     timestep: float = zn.params()
     dump_interval: int = zn.params()
     steps: int = zn.params()
-
+    #Outputs:
+    atoms_list: typing.List[ase.Atoms] = zn.metrics()
+    #Functions:
     def run_md(self):
-        atoms_list = asemd.run_simulation(
+        self.atoms_list = asemd.run_simulation(
             atoms=self.atoms,
             temperature=self.temperature,
             timestep=self.timestep,
@@ -35,13 +37,15 @@ class RunMD(Node):
 
 class ComputeRDF(Node):
     """Calculate RDF whatever that means..."""
-
+    #Inputs:
     atoms_list: typing.List[ase.Atoms] = zn.deps()
     rmax: float = zn.params()
     nbins: int = zn.params()
-
+    #Outputs:
+    rfd: dict = zn.metrics()
+    #Function:
     def calc_rfd(self):
-        rfd = asemd.compute_rdf(
+        self.rfd = asemd.compute_rdf(
             atoms_list=self.atoms_list, 
             rmax=self.rmas, 
             nbins=self.nbins, 
