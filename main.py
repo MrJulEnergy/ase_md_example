@@ -1,8 +1,45 @@
 import ase_md.simulator as ase
 
-atoms = ase.generate_atoms(size=2)
 
-atoms_list = ase.run_simulation(
-    atoms=atoms, temperature=300, timestep=1.0, dump_interval=5, steps=20)
+class GetAtoms(Node):
+    """Generate Atoms for Simulation"""
 
-rfd = ase.compute_rdf(atoms_list=atoms_list, rmax=1.0, nbins=50, elements="Cu")
+    size: int = zn.params()
+
+    def generate(self):
+        self.atoms = ase.generate_atoms(self.size)
+
+
+class RunMD(Node):
+    """Run Simulation"""
+
+    # atoms =
+    temperature: float = zn.params()
+    timestep: float = zn.params()
+    dump_interval: int = zn.params()
+    steps: int = zn.params()
+
+    def run_md(self):
+        atoms_list = ase.run_simulation(
+            atoms=self.atoms,
+            temperature=self.temperature,
+            timestep=self.timestep,
+            dump_interval=self.dump_interval,
+            steps=self.steps,
+        )
+
+
+class ComputeRDF(Node):
+    """Calculate RDF whatever that means..."""
+
+    # atoms_list =
+    rmax: float = zn.params()
+    nbins: int = zn.params()
+
+    def calc_rfd(self):
+        rfd = ase.compute_rdf(
+            atoms_list=self.atoms_list, 
+            rmax=self.rmas, 
+            nbins=self.nbins, 
+            elements="Cu"
+        )
