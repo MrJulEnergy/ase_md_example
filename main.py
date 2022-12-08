@@ -3,12 +3,21 @@ import ase
 import ase_md.simulator as asemd
 import typing
 
+
+#TODO Add default parameter
+#TODO look up zn.deps()
+
+
 class GetAtoms(Node):
     """Generate Atoms for Simulation"""
     #Inputs:
     size: int = zn.params()
     #Outputs:
     atoms: ase.Atoms = zn.metrics()
+    #Default Values:
+    def __post_init__(self):
+        """ default arguments for attributes """
+        pass
     #Function:
     def generate(self):
         self.atoms = asemd.generate_atoms(self.size)
