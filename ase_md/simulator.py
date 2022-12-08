@@ -58,7 +58,7 @@ def run_simulation(
     atoms_list = []
 
     # Now run the dynamics
-    #printenergy(atoms)
+    printenergy(atoms)
     for _ in tqdm.trange(steps, ncols=100):
         dyn.run(dump_interval)
         printenergy(atoms)
