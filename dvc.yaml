@@ -1,0 +1,15 @@
+stages:
+    GenerateAtoms:
+        cmd: 'python3 -c "from main import GenerateAtoms; GenerateAtoms.load(name=''GenerateAtoms'').run_and_save()" '
+        desc: Generate Atoms for Simulation
+        outs:
+        - nodes/GenerateAtoms/outs.json
+        params:
+        - GenerateAtoms
+    MakeAtoms:
+        cmd: 'python3 -c "from main import MakeAtoms; MakeAtoms.load(name=''MakeAtoms'').run_and_save()" '
+        desc: Generate Atoms for Simulation
+        outs:
+        - nodes/MakeAtoms/outs.json
+        params:
+        - MakeAtoms

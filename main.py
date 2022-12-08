@@ -1,28 +1,24 @@
+
 from zntrack import Node, zn
 import ase
 import ase_md.simulator as asemd
 import typing
 
-
-#TODO Add default parameter
-#TODO look up zn.deps()
-
-
-class GetAtoms(Node):
+class MakeAtoms(Node):
     """Generate Atoms for Simulation"""
     #Inputs:
     size: int = zn.params()
     #Outputs:
-    atoms: ase.Atoms = zn.metrics()
-    #Default Values:
-    def __post_init__(self):
-        """ default arguments for attributes """
-        pass
+    atoms: ase.Atoms = zn.outs()
     #Function:
-    def generate(self):
+    def run(self):
         self.atoms = asemd.generate_atoms(self.size)
 
+if __name__ == "__main__":
+    cool_atoms = MakeAtoms(size=3)
+    cool_atoms.write_graph()
 
+'''
 class RunMD(Node):
     """Run Simulation"""
     #Inputs:
@@ -32,7 +28,7 @@ class RunMD(Node):
     dump_interval: int = zn.params()
     steps: int = zn.params()
     #Outputs:
-    atoms_list: typing.List[ase.Atoms] = zn.metrics()
+    atoms_list: typing.List[ase.Atoms] = zn.outs()
     #Functions:
     def run_md(self):
         self.atoms_list = asemd.run_simulation(
@@ -60,3 +56,4 @@ class ComputeRDF(Node):
             nbins=self.nbins, 
             elements="Cu"
         )
+'''
