@@ -19,7 +19,7 @@ stages:
         cmd: 'python3 -c "from main import RunMD; RunMD.load(name=''RunMD'').run_and_save()" '
         deps:
         - nodes/GetAtoms/outs.json
-        desc: Run Simulation
+        desc: runs MD (time expensive)
         outs:
         - nodes/RunMD/outs.json
         params:

@@ -17,20 +17,20 @@ class GetAtoms(Node):
 
 
 class RunMD(Node):
-    """Run Simulation"""
+    """runs MD (time expensive)"""
 
     # Inputs:
-    atoms: ase.Atoms = zn.deps()
-    temperature: float = zn.params()
-    timestep: float = zn.params()
-    dump_interval: int = zn.params()
-    steps: int = zn.params()
+    atoms: GetAtoms = zn.deps()
+    temperature = zn.params()
+    timestep = zn.params()
+    steps = zn.params()
+    dump_interval = zn.params()
     # Outputs:
-    atom_list: typing.List[ase.Atoms] = zn.outs()
-    # Functions:
+    atoms_list = zn.outs()
+    # Function
     def run(self):
-        self.atom_list = asemd.run_simulation(
-            atoms=self.atoms,
+        self.atoms_list = asemd.run_simulation(
+            atoms=self.atoms.atoms,
             temperature=self.temperature,
             timestep=self.timestep,
             steps=self.steps,
@@ -40,8 +40,9 @@ class RunMD(Node):
 
 class ComputeRDF(Node):
     """Calculate RDF whatever that means..."""
+
     # Inputs:
-    atoms_list: typing.List[ase.Atoms] = zn.deps()
+    atoms_list: RunMD = zn.deps()
     rmax: float = zn.params()
     nbins: int = zn.params()
     # Outputs:
@@ -49,16 +50,19 @@ class ComputeRDF(Node):
     # Function:
     def run(self):
         self.rfd = asemd.compute_rdf(
-            atoms_list=self.atoms_list, rmax=self.rmas, nbins=self.nbins, elements="Cu"
+            atoms_list=self.atoms_list.atoms_list,
+            rmax=self.rmax,
+            nbins=self.nbins,
+            elements="Cu",
         )
+
 
 if __name__ == "__main__":
     cool_atoms = GetAtoms(size=3)
     cool_atoms.write_graph()
     cool_atoms_list = RunMD(
-        atoms=cool_atoms, temperature=300, timestep=5.0, steps=20, dump_interval=10
+        atoms=cool_atoms, temperature=300, timestep=1.0, steps=20, dump_interval=5
     )
     cool_atoms_list.write_graph()
-    res_rdf = ComputeRDF(atoms_list=cool_atoms_list, rmax=1.0, nbins=50)
-    res_rdf.write_graph()
-
+    result = ComputeRDF(atoms_list=cool_atoms_list, rmax=1.0, nbins=50)
+    result.write_graph()

@@ -11,3 +11,37 @@ stages:
     - path: nodes/GetAtoms/outs.json
       md5: 6b5a79446c5355a71fa33d4aaed92041
       size: 5762
+  RunMD:
+    cmd: "python3 -c \"from main import RunMD; RunMD.load(name='RunMD').run_and_save()\"\
+      \ "
+    deps:
+    - path: nodes/GetAtoms/outs.json
+      md5: 6b5a79446c5355a71fa33d4aaed92041
+      size: 5762
+    params:
+      params.yaml:
+        RunMD:
+          dump_interval: 5
+          steps: 20
+          temperature: 300
+          timestep: 1.0
+    outs:
+    - path: nodes/RunMD/outs.json
+      md5: 0de12f8f2b31c9595eea40ef13fb0705
+      size: 181608
+  ComputeRDF:
+    cmd: "python3 -c \"from main import ComputeRDF; ComputeRDF.load(name='ComputeRDF').run_and_save()\"\
+      \ "
+    deps:
+    - path: nodes/RunMD/outs.json
+      md5: 0de12f8f2b31c9595eea40ef13fb0705
+      size: 181608
+    params:
+      params.yaml:
+        ComputeRDF:
+          nbins: 50
+          rmax: 1.0
+    outs:
+    - path: nodes/ComputeRDF/outs.json
+      md5: 7f36380463818945029e57483b4d08f1
+      size: 1607

@@ -4,7 +4,7 @@ ComputeRDF:
 GetAtoms:
     size: 3
 RunMD:
-    dump_interval: 10
+    dump_interval: 5
     steps: 20
     temperature: 300
-    timestep: 5.0
+    timestep: 1.0
