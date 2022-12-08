@@ -1,6 +1,10 @@
-GenerateAtoms:
-    size: 3
+ComputeRDF:
+    nbins: 50
+    rmax: 1.0
 GetAtoms:
-    size: 2
-MakeAtoms:
     size: 3
+RunMD:
+    dump_interval: 10
+    steps: 20
+    temperature: 300
+    timestep: 5.0

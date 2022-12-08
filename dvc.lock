@@ -1,24 +1,13 @@
 schema: '2.0'
 stages:
-  MakeAtoms:
-    cmd: "python3 -c \"from main import MakeAtoms; MakeAtoms.load(name='MakeAtoms').run_and_save()\"\
+  GetAtoms:
+    cmd: "python3 -c \"from main import GetAtoms; GetAtoms.load(name='GetAtoms').run_and_save()\"\
       \ "
     params:
       params.yaml:
-        MakeAtoms:
+        GetAtoms:
           size: 3
     outs:
-    - path: nodes/MakeAtoms/outs.json
-      md5: 6b5a79446c5355a71fa33d4aaed92041
-      size: 5762
-  GenerateAtoms:
-    cmd: "python3 -c \"from main import GenerateAtoms; GenerateAtoms.load(name='GenerateAtoms').run_and_save()\"\
-      \ "
-    params:
-      params.yaml:
-        GenerateAtoms:
-          size: 3
-    outs:
-    - path: nodes/GenerateAtoms/outs.json
+    - path: nodes/GetAtoms/outs.json
       md5: 6b5a79446c5355a71fa33d4aaed92041
       size: 5762

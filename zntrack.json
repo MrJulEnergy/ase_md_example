@@ -1,1 +1,22 @@
-{}
+{
+    "RunMD": {
+        "atoms": {
+            "_type": "ZnTrackType",
+            "value": {
+                "module": "main",
+                "cls": "GetAtoms",
+                "name": "GetAtoms"
+            }
+        }
+    },
+    "ComputeRDF": {
+        "atoms_list": {
+            "_type": "ZnTrackType",
+            "value": {
+                "module": "main",
+                "cls": "RunMD",
+                "name": "RunMD"
+            }
+        }
+    }
+}

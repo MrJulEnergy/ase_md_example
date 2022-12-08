@@ -1,15 +1,26 @@
 stages:
-    GenerateAtoms:
-        cmd: 'python3 -c "from main import GenerateAtoms; GenerateAtoms.load(name=''GenerateAtoms'').run_and_save()" '
+    ComputeRDF:
+        cmd: 'python3 -c "from main import ComputeRDF; ComputeRDF.load(name=''ComputeRDF'').run_and_save()" '
+        deps:
+        - nodes/RunMD/outs.json
+        desc: Calculate RDF whatever that means...
+        outs:
+        - nodes/ComputeRDF/outs.json
+        params:
+        - ComputeRDF
+    GetAtoms:
+        cmd: 'python3 -c "from main import GetAtoms; GetAtoms.load(name=''GetAtoms'').run_and_save()" '
         desc: Generate Atoms for Simulation
         outs:
-        - nodes/GenerateAtoms/outs.json
+        - nodes/GetAtoms/outs.json
         params:
-        - GenerateAtoms
-    MakeAtoms:
-        cmd: 'python3 -c "from main import MakeAtoms; MakeAtoms.load(name=''MakeAtoms'').run_and_save()" '
-        desc: Generate Atoms for Simulation
+        - GetAtoms
+    RunMD:
+        cmd: 'python3 -c "from main import RunMD; RunMD.load(name=''RunMD'').run_and_save()" '
+        deps:
+        - nodes/GetAtoms/outs.json
+        desc: Run Simulation
         outs:
-        - nodes/MakeAtoms/outs.json
+        - nodes/RunMD/outs.json
         params:
-        - MakeAtoms
+        - RunMD
