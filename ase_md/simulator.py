@@ -71,6 +71,7 @@ def compute_rdf(
     atoms_list: typing.List[ase.Atoms], rmax: float, nbins: int, elements: str
 ) -> dict:
     """Compute RDF."""
+    print(atoms_list)
     analysis = ase.geometry.analysis.Analysis(atoms_list)
     data = analysis.get_rdf(rmax=rmax, nbins=nbins, elements=elements)
     return {"x": np.linspace(0, rmax, nbins), "y": np.mean(data, axis=0)}

@@ -2,7 +2,7 @@ from zntrack import Node, zn
 import ase
 import ase_md.simulator as asemd
 import typing
-
+import matplotlib.pyplot as plt
 
 class GetAtoms(Node):
     """Generate Atoms for Simulation"""
@@ -46,10 +46,10 @@ class ComputeRDF(Node):
     rmax: float = zn.params()
     nbins: int = zn.params()
     # Outputs:
-    rfd: dict = zn.outs()
+    rdf: dict = zn.outs()
     # Function:
     def run(self):
-        self.rfd = asemd.compute_rdf(
+        self.rdf = asemd.compute_rdf(
             atoms_list=self.atoms_list.atoms_list,
             rmax=self.rmax,
             nbins=self.nbins,
@@ -58,11 +58,11 @@ class ComputeRDF(Node):
 
 
 if __name__ == "__main__":
-    cool_atoms = GetAtoms(size=3)
-    cool_atoms.write_graph()
-    cool_atoms_list = RunMD(
-        atoms=cool_atoms, temperature=300, timestep=1.0, steps=20, dump_interval=5
+    atoms = GetAtoms(size=3)
+    atoms.write_graph()
+    atoms_list = RunMD(
+        atoms=atoms, temperature=300, timestep=1.0, steps=20, dump_interval=5
     )
-    cool_atoms_list.write_graph()
-    result = ComputeRDF(atoms_list=cool_atoms_list, rmax=1.0, nbins=50)
-    result.write_graph()
+    atoms_list.write_graph()
+    rdf = ComputeRDF(atoms_list=atoms_list, rmax=3.6, nbins=50)
+    rdf.write_graph()

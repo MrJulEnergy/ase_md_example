@@ -1,6 +1,6 @@
 ComputeRDF:
     nbins: 50
-    rmax: 1.0
+    rmax: 3.6
 GetAtoms:
     size: 3
 RunMD:

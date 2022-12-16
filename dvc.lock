@@ -27,21 +27,21 @@ stages:
           timestep: 1.0
     outs:
     - path: nodes/RunMD/outs.json
-      md5: 0de12f8f2b31c9595eea40ef13fb0705
+      md5: ff365e9c83f8d788d806d81236e6e228
       size: 181608
   ComputeRDF:
     cmd: "python3 -c \"from main import ComputeRDF; ComputeRDF.load(name='ComputeRDF').run_and_save()\"\
       \ "
     deps:
     - path: nodes/RunMD/outs.json
-      md5: 0de12f8f2b31c9595eea40ef13fb0705
+      md5: ff365e9c83f8d788d806d81236e6e228
       size: 181608
     params:
       params.yaml:
         ComputeRDF:
           nbins: 50
-          rmax: 1.0
+          rmax: 3.6
     outs:
     - path: nodes/ComputeRDF/outs.json
-      md5: 7f36380463818945029e57483b4d08f1
+      md5: 65720242224976b89e23cc8768befb79
       size: 1607
