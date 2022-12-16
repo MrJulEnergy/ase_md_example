@@ -78,6 +78,8 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+dvc_plots/
+
 # IPython
 profile_default/
 ipython_config.py
