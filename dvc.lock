@@ -6,7 +6,7 @@ stages:
     params:
       params.yaml:
         GetAtoms:
-          size: 3
+          size: 2
     outs:
     - path: nodes/GetAtoms/outs.json
       md5: 6b5a79446c5355a71fa33d4aaed92041
@@ -22,26 +22,29 @@ stages:
       params.yaml:
         RunMD:
           dump_interval: 5
-          steps: 20
+          steps: 50
           temperature: 300
           timestep: 1.0
     outs:
     - path: nodes/RunMD/outs.json
-      md5: ff365e9c83f8d788d806d81236e6e228
-      size: 181608
+      md5: 8d9d8304b0db3e6e6e2742aa5410d676
+      size: 453978
   ComputeRDF:
     cmd: "python3 -c \"from main import ComputeRDF; ComputeRDF.load(name='ComputeRDF').run_and_save()\"\
       \ "
     deps:
     - path: nodes/RunMD/outs.json
-      md5: ff365e9c83f8d788d806d81236e6e228
-      size: 181608
+      md5: 8d9d8304b0db3e6e6e2742aa5410d676
+      size: 453978
     params:
       params.yaml:
         ComputeRDF:
-          nbins: 50
+          nbins: 500
           rmax: 3.6
     outs:
+    - path: nodes/ComputeRDF/nice_plot.csv
+      md5: 0d6380472e07373b58c72ef9cf55e802
+      size: 14815
     - path: nodes/ComputeRDF/outs.json
-      md5: 65720242224976b89e23cc8768befb79
-      size: 1607
+      md5: 578b43e502f015cf53aeb7ea09553d2f
+      size: 11207

@@ -8,6 +8,10 @@ stages:
         - nodes/ComputeRDF/outs.json
         params:
         - ComputeRDF
+        plots:
+        -   nodes/ComputeRDF/nice_plot.csv:
+                x_label: r
+                y_label: amp
     GetAtoms:
         cmd: 'python3 -c "from main import GetAtoms; GetAtoms.load(name=''GetAtoms'').run_and_save()" '
         desc: Generate Atoms for Simulation

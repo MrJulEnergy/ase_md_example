@@ -1,10 +1,10 @@
 ComputeRDF:
-    nbins: 50
+    nbins: 500
     rmax: 3.6
 GetAtoms:
-    size: 3
+    size: 2
 RunMD:
     dump_interval: 5
-    steps: 20
+    steps: 50
     temperature: 300
     timestep: 1.0

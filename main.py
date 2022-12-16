@@ -3,6 +3,7 @@ import ase
 import ase_md.simulator as asemd
 import typing
 import matplotlib.pyplot as plt
+import pandas as pd
 
 class GetAtoms(Node):
     """Generate Atoms for Simulation"""
@@ -47,6 +48,7 @@ class ComputeRDF(Node):
     nbins: int = zn.params()
     # Outputs:
     rdf: dict = zn.outs()
+    nice_plot = zn.plots(x_label="r", y_label="amp")
     # Function:
     def run(self):
         self.rdf = asemd.compute_rdf(
@@ -55,6 +57,11 @@ class ComputeRDF(Node):
             nbins=self.nbins,
             elements="Cu",
         )
+        x_data = self.rdf["x"]
+        y_data = self.rdf["y"]
+        df = pd.DataFrame({"y": y_data, "x": x_data})
+        self.nice_plot = df
+        self.nice_plot.index.name=("x")
 
 
 if __name__ == "__main__":
@@ -66,3 +73,4 @@ if __name__ == "__main__":
     atoms_list.write_graph()
     rdf = ComputeRDF(atoms_list=atoms_list, rmax=3.6, nbins=50)
     rdf.write_graph()
+
